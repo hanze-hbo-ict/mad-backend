@@ -66,3 +66,11 @@ ngrok http 8080 --domain ladybird-sharp-alpaca.ngrok-free.app
 ```
 
 *Let op:* Het is de bedoeling dat iedereen met dezelfde backend werkt. Mocht je ideeën, aanvullingen of verbeteringen hebben voor deze backend, start dan een discussie op github of doe een pull request.
+
+## Docker
+Het is ook mogelijk om het project in een docker container op te starten, het voordeel hiervan is dat je niet locaal Java en Jhipster hoeft te hebben.
+
+```bash
+docker build -t mad-backend:latest .
+docker run -it -p 8080:8080 mad-backend:latest
+```
