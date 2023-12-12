@@ -66,8 +66,18 @@ ngrok http 8080 --domain ladybird-sharp-alpaca.ngrok-free.app
 ```
 
 ## Docker
-Het is ook mogelijk om het project in een docker container op te starten, het voordeel hiervan is dat je niet locaal Java en Jhipster hoeft te hebben.
-Het bouwen van de image kan een paar (5-10) minuten duren, dus heb geduld. Je moet nog wel zelf Ngrok installeren.
+Het is ook mogelijk om het project in een docker container op te starten, het voordeel hiervan is dat je niet locaal Java en Jhipster hoeft te hebben. Hiervoor hebt je twee opties.
+
+### De mad-backend applicatie direct in een container draaien (beste methode)
+
+Dit download een image die al is gemaakt en alleen de benodigde dingen heeft.
+
+```bash
+docker pull ghcr.io/wjtje/mad-backend:latest
+docker run -it -p 8080:8080 ghcr.io/wjtje/mad-backend:latest
+```
+
+### Jhipster compleet in een container draaien
 
 ```bash
 docker build -t mad-backend:latest .
