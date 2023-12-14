@@ -25,5 +25,8 @@ COPY seeddata/*.csv /app/src/main/resources/config/liquibase/fake-data/
 # Install all the packages
 RUN ./mvnw package
 
+# Add ngrok-free.app to origin whitelist
+RUN sed -i "s|allowed-origin-patterns: .*$|allowed-origin-patterns: 'https://*.ngrok-free.app/'|g" /app/src/main/resources/config/application-dev.yml
+
 EXPOSE 8080
 CMD ./mvnw
