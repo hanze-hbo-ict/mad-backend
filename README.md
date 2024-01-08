@@ -35,7 +35,7 @@ npx jhipster jdl application.jdl
 npx jhipster jdl model.jdl
 ```
 
-## Oplossing voor compilatiefout
+## Oplossing voor compilatiefout (JHipster V8.0.0)
 
 Voeg deze import:
 ``` java
@@ -44,13 +44,32 @@ import static org.mockito.Mockito.when;
 
 Toe aan `nl.hanze.se4.automaat.service.UserServiceIT` (te vinden in `/src/test/java/`). Nu zou de applicatie moeten builden.
 
-### Seed data
+## Seed data
 
 - Vervang de gegenereerde seed-data met de data uit de zip. Kopieer de `.csv`-bestanden uit de directory `seeddata` naar `src/main/resources/config/liquibase/fake-data/`. Als alles goed is gegaan kun je nu de applicatie starten:
 
 ```
 ./mvnw
 ```
+
+## Registratie waarbij ook Customer wordt aangemaakt
+De default code voor het registreren van een account luistert op endpoint `/api/registration` en creëert een User record. Voor de AutoMaat backend is een extra endpoint beschikbaar `/api/AM/registretion` waarmee niet alleen een User record wordt aangemaakt, maar ook een Customer record en de koppeling tussen deze twee. Om dit endpoint werkend te krijgen moeten de volgende acties uitgevoerd worden:
+- Copieer `AMAccountResource.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/web/rest/` van het gegenereerde project te copieren.
+- Pas `/src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan door de volgende regel toe te voegen:
+```java
+.requestMatchers(mvc.pattern("/api/AM/register")).permitAll()
+```
+
+Meest voor de hand liggende plek is meteen na de `"/api/register)).permitAll()"` zodat het er als volgt uitziet:
+```java
+.requestMatchers(mvc.pattern("/api/register")).permitAll()
+.requestMatchers(mvc.pattern("/api/AM/register")).permitAll()
+```
+
+## REST Api Cars openzetten
+Postgeneratie stap (al uitgevoerd in de `mad-backend-generated` repo):
+- Pas `src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan:
+    Voeg de regel `.requestMatchers(mvc.pattern("/api/cars")).permitAll()` toe tussen de andere `permitAll()`
 
 ## Ngrok
 Om met een https-verbinding te werken kun je de applicatie achter een ngrok tunnel laten draaien. Bovenstaand commando start de server in development mode, luisterend op poort 8080.

@@ -118,3 +118,7 @@ relationship OneToMany {
     Inspection{repair} to Repair{inspection},
     Car{rental} to Rental{car(licensePlate)}
 }
+
+relationship OneToOne {
+    Customer{systemUser(login)} to User with builtInEntity
+}
