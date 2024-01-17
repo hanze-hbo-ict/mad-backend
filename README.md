@@ -1,3 +1,5 @@
+> INFO: Gebruik de nieuwe mad-backend-generated
+
 # Inleiding
 
 Dit document beschrijft de minimale stappen die nodig zijn om het backend deel woor de course *Mobile Application Development* draaiend te krijgen.
