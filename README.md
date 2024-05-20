@@ -1,3 +1,5 @@
+> INFO: Gebruik de nieuwe mad-backend-generated
+
 # Inleiding
 
 Dit document beschrijft de minimale stappen die nodig zijn om het backend deel woor de course *Mobile Application Development* draaiend te krijgen.
@@ -82,6 +84,26 @@ De volgende stappen beschrijven hoe je ngrok aan de praat kan krijgen:
 
 ```bash
 ngrok http 8080 --domain ladybird-sharp-alpaca.ngrok-free.app
+```
+
+## Docker
+Het is ook mogelijk om het project in een docker container op te starten, het voordeel hiervan is dat je niet locaal Java en Jhipster hoeft te hebben. Hiervoor hebt je twee opties.
+
+### De mad-backend applicatie direct in een container draaien (beste methode)
+
+Deze image is al gemaakt, en bevat alle benodigde dingen.
+
+```bash
+docker pull ghcr.io/wjtje/mad-backend:latest
+docker run -it -p 8080:8080 ghcr.io/wjtje/mad-backend:latest
+```
+
+### Zelf de jhipster container maken
+
+```bash
+docker build -t mad-backend:latest .
+docker run -it -p 8080:8080 mad-backend:latest -- /bin/bash
+./mvnw package jib:build -Djib.to.image=ghcr.io/USERNAME/mad-backend:latest -Djib.to.auth.username=USERNAME -Djib.to.auth.password=PERSONAL_ACCESS_TOKEN
 ```
 
 *Let op:* Het is de bedoeling dat iedereen met dezelfde backend werkt. Mocht je ideeën, aanvullingen of verbeteringen hebben voor deze backend, start dan een discussie op github of doe een pull request.
