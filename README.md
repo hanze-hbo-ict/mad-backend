@@ -13,36 +13,19 @@ Om met deze beschrijving en JHipster aan de slag te kunnen moet je het volgende 
 
 De backend kan te allen tijde opnieuw gegenereerd worden op basis van de `application.jdl` en de `model.jdl`. Onderstaande gaat ervan uit dat JHipster is geïnstalleerd (zie [JHipster installatie](https://www.jhipster.tech/installation/)). In onderstaand voorbeeld wordt gebruik gemaakt van een lokaal (projectdomein) installatie en wordt `npx` gebruikt om de generator aan te roepen. Dit hoeft niet, je kunt zelf bepalen hoe je JHipster installeert. Volg de instructies op [de JHipster site](https://www.jhipster.tech/installation/).
 
-Installeer JHipster door in een lege map het volgende commando uit te voeren:
+Installeer JHipster 8.7.0 (laatste en getest werkende versie op moment van creatie) door in een lege map het volgende commando uit te voeren:
 
 ```bash
-npm install generator-jhipster
+npm install generator-jhipster@8.7.0
 ```
 
-LET OP! In versie 8.0.0 zit een bug die foutieve testclasses genereert. Zie [hieronder](#oplossing-voor-compilatiefout) voor de workaround.
+- Kopieer `application.jdl` naar je projectmap.
 
-- Kopieer de bestanden `application.jdl` en `model.jdl` naar je projectmap.
-
-- Genereer eerst de applicatie zelf:
+- Genereer de applicatie:
 
 ```bash
 npx jhipster jdl application.jdl
 ```
-
-- Daarna genereer je het model en alle verwante (al gegenereerde) objecten.
-
-```bash
-npx jhipster jdl model.jdl
-```
-
-## Oplossing voor compilatiefout (JHipster V8.0.0)
-
-Voeg deze import:
-``` java
-import static org.mockito.Mockito.when;
-```
-
-Toe aan `nl.hanze.se4.automaat.service.UserServiceIT` (te vinden in `/src/test/java/`). Nu zou de applicatie moeten builden.
 
 ## Seed data
 
@@ -54,7 +37,7 @@ Toe aan `nl.hanze.se4.automaat.service.UserServiceIT` (te vinden in `/src/test/j
 
 ## Registratie waarbij ook Customer wordt aangemaakt
 De default code voor het registreren van een account luistert op endpoint `/api/registration` en creëert een User record. Voor de AutoMaat backend is een extra endpoint beschikbaar `/api/AM/registretion` waarmee niet alleen een User record wordt aangemaakt, maar ook een Customer record en de koppeling tussen deze twee. Om dit endpoint werkend te krijgen moeten de volgende acties uitgevoerd worden:
-- Copieer `AMAccountResource.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/web/rest/` van het gegenereerde project te copieren.
+- Copieer `AMAccountResource.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/web/rest/` van het gegenereerde project.
 - Pas `/src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan door de volgende regel toe te voegen:
 ```java
 .requestMatchers(mvc.pattern("/api/AM/register")).permitAll()
@@ -66,10 +49,16 @@ Meest voor de hand liggende plek is meteen na de `"/api/register)).permitAll()"`
 .requestMatchers(mvc.pattern("/api/AM/register")).permitAll()
 ```
 
-## REST Api Cars openzetten
+## Extra endpoint om de ingelogde Customer op te halen
+Er is geen default endpoint om de ingelogde Customer op te halen, deze stap voegt dit endpoint toe;
+- Copieer `AMCustomerResource.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/web/rest/` van het gegenereerde project.
+- Copieer `AMCustomerRepository.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/repository/` van het gegenereerde project.
+
+Je hebt nu een extra endpoint `/api/AM/me` waarop je het `Customer` object van de ingelogde gebruiker kan ophalen.
+
+## REST Api Cars openzetten (optioneel)
 Postgeneratie stap (al uitgevoerd in de `mad-backend-generated` repo):
-- Pas `src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan:
-    Voeg de regel `.requestMatchers(mvc.pattern("/api/cars")).permitAll()` toe tussen de andere `permitAll()`
+Pas `src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan: Voeg de regel `.requestMatchers(mvc.pattern("/api/cars")).permitAll()` toe tussen de andere `permitAll()`
 
 ## Ngrok
 Om met een https-verbinding te werken kun je de applicatie achter een ngrok tunnel laten draaien. Bovenstaand commando start de server in development mode, luisterend op poort 8080.
