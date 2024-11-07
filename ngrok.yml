@@ -1,0 +1,10 @@
+version: "2"
+authtoken: 2REQDlVRY84Vml2cH70Y8QyL6Lx_6qtcHJt3tpu1gQUAJC6Pc
+tunnels:
+  automaat:
+    proto: http
+    addr: 8080
+    domain: ladybird-sharp-alpaca.ngrok-free.app
+  keycloak:
+    proto: http
+    addr: 9080

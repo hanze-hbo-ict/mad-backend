@@ -1,24 +1,16 @@
 package nl.hanze.se4.automaat.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import nl.hanze.se4.automaat.domain.Customer;
 import nl.hanze.se4.automaat.domain.User;
 import nl.hanze.se4.automaat.repository.AMCustomerRepository;
-import nl.hanze.se4.automaat.repository.CustomerRepository;
 import nl.hanze.se4.automaat.repository.UserRepository;
 import nl.hanze.se4.automaat.security.SecurityUtils;
-import nl.hanze.se4.automaat.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -31,11 +23,6 @@ public class AMCustomerResource {
 
     private final Logger log = LoggerFactory.getLogger(AMCustomerResource.class);
 
-    private static final String ENTITY_NAME = "customer";
-
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
-
     private final AMCustomerRepository customerRepository;
     private final UserRepository userRepository;
 
@@ -45,16 +32,15 @@ public class AMCustomerResource {
     }
 
     /**
-     * {@code GET  /customers/:id} : get the "id" customer.
+     * {@code GET  /me/} : get the customer connected to the currently logged in {@link User).
      *
-     * @param id the id of the customer to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customer, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/me")
     public ResponseEntity<Customer> getCurrentCustomer() {
         log.debug("REST request to get the logged in Customer");
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
-        Optional<Customer> customer = customerRepository.findOneWithUserId(user.get().getId());
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
+        Optional<Customer> customer = customerRepository.findOneWithUserId(user.isPresent() ? user.get().getId() : "");
         return ResponseUtil.wrapOrNotFound(customer);
     }
 }

@@ -16,5 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AMCustomerRepository extends CustomerRepository {
     @Query("select customer from Customer customer left join fetch customer.systemUser user where user.id =:id")
-    Optional<Customer> findOneWithUserId(@Param("id") Long id);
+    Optional<Customer> findOneWithUserId(@Param("id") String id);
 }
