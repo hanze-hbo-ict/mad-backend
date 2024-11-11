@@ -2,7 +2,7 @@ application {
   config {
     applicationType monolith
     baseName AutoMaat
-    authenticationType oauth2
+    authenticationType jwt
     buildTool maven
     cacheProvider no
     clientFramework angularX
