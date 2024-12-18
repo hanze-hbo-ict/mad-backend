@@ -36,7 +36,7 @@ npx jhipster jdl application.jdl
 ```
 
 ## Registratie waarbij ook Customer wordt aangemaakt
-De default code voor het registreren van een account luistert op endpoint `/api/registration` en creëert een User record. Voor de AutoMaat backend is een extra endpoint beschikbaar `/api/AM/registretion` waarmee niet alleen een User record wordt aangemaakt, maar ook een Customer record en de koppeling tussen deze twee. Om dit endpoint werkend te krijgen moeten de volgende acties uitgevoerd worden:
+De default code voor het registreren van een account luistert op endpoint `/api/registration` en creëert een User record. Voor de AutoMaat backend is een extra endpoint beschikbaar `/api/AM/registration` waarmee niet alleen een User record wordt aangemaakt, maar ook een Customer record en de koppeling tussen deze twee. Om dit endpoint werkend te krijgen moeten de volgende acties uitgevoerd worden:
 - Copieer `AMAccountResource.java` uit de `modifications` map van deze repo naar `src/main/java/nl/hanze/se4/automaat/web/rest/` van het gegenereerde project.
 - Pas `/src/main/java/nl/hanze/se4/automaat/config/SecurityConfiguration.java` aan door de volgende regel toe te voegen:
 ```java

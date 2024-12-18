@@ -1,0 +1,9 @@
+name: automaat
+services:
+  maildev:
+    image: maildev/maildev
+    environment:
+      - MAILDEV_SMTP_PORT=25
+    ports:
+      - 1080:1080
+      - 25:25
