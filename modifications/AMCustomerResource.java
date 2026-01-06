@@ -40,7 +40,7 @@ public class AMCustomerResource {
     public ResponseEntity<Customer> getCurrentCustomer() {
         log.debug("REST request to get the logged in Customer");
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
-        Optional<Customer> customer = customerRepository.findOneWithUserId(user.isPresent() ? user.get().getId() : "");
+        Optional<Customer> customer = customerRepository.findOneWithUserId(user.isPresent() ? user.get().getId() : -1L);
         return ResponseUtil.wrapOrNotFound(customer);
     }
 }

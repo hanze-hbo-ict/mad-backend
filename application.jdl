@@ -1,3 +1,5 @@
+// no-linting
+
 application {
   config {
     applicationType monolith
@@ -147,4 +149,4 @@ relationship OneToOne {
     Customer{systemUser(login)} to User with builtInEntity
 }
 
-filter Rental, Inspection
+filter Rental, Inspection, Car
