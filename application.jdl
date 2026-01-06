@@ -37,6 +37,10 @@ entity Car {
     latitude Float
 }
 
+entity CarReview {
+    review String
+}
+
 entity Rental {
     code String,
     longitude Float,
@@ -48,6 +52,7 @@ entity Rental {
 
 entity Customer {
     nr Integer,
+    licenseChecked Boolean,
     lastName String,
     firstName String,
     from LocalDate
@@ -132,7 +137,9 @@ enum RepairStatus {
 relationship OneToMany {
     Location{customer(lastName)} to Customer{location},
     Customer{rental} to Rental{customer(lastName)},
-    Car{inspection} to Inspection{car(licensePlate)}
+    Customer{review} to CarReview{customer(lastName)},
+    Car{inspection} to Inspection{car(licensePlate)},
+    Car{review} to CarReview{car(licensePlate)},
     Car{repair} to Repair{car(licensePlate)},
     Employee{inspection} to Inspection{employee(lastName)},
     Employee{repair} to Repair{employee(lastName)},
